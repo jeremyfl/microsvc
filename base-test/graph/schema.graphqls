@@ -2,21 +2,10 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
-}
-
 type Product {
-  id: Int
-  created_at: String
-  updated_at: String
-  deleted_at: String
-  product_id: String
+  id: ID
   name: String
-  price: Int
+  price: Float
   description: String
   rating: Float
   category: String
@@ -24,21 +13,6 @@ type Product {
   thumbnail: String
 }
 
-type User {
-  id: ID!
-  name: String!
-}
-
 type Query {
-  todos: [Todo!]!
-  products: [Product!]
-}
-
-input NewTodo {
-  text: String!
-  userId: String!
-}
-
-type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  products: [Product]
 }

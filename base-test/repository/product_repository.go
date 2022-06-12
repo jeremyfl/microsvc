@@ -11,10 +11,10 @@ type ProductRepositoryImpl struct {
 	DB *internal.Database
 }
 
-func (cr ProductRepositoryImpl) Get(ctx context.Context) *[]model.Product {
-	var products []model.Product
+func (cr ProductRepositoryImpl) Get(ctx context.Context) []*model.Product {
+	var products []*model.Product
 
 	cr.DB.Find(&products)
 
-	return &products
+	return products
 }

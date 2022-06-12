@@ -15,5 +15,5 @@ type AuthService interface {
 }
 
 type ProductService interface {
-	FetchProduct(ctx context.Context) *[]model.Product
+	FetchProduct(ctx context.Context) []*model.Product
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"customer/cmd"
 	"customer/graph"
 	"customer/graph/generated"
 	"log"
@@ -19,7 +20,10 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	db := cmd.InitDatabase()
+	entities := cmd.InitEntities(db)
+
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{Services: entities}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)

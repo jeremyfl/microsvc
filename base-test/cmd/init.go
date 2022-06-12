@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"customer/api/controller"
 	"customer/domain"
 	"customer/domain/model"
 	"customer/internal"
@@ -10,8 +9,8 @@ import (
 	"customer/service"
 )
 
-// initDatabase initialize the database repository
-func initDatabase() *internal.Database {
+// InitDatabase Initialize the database repository
+func InitDatabase() *internal.Database {
 	db, err := gorm.NewClient()
 	if err != nil {
 		panic("Error when creating new database instances")
@@ -24,25 +23,22 @@ func initDatabase() *internal.Database {
 	return &internal.Database{DB: db}
 }
 
-// initRepo initialize the repository
-func initRepo(db *internal.Database) domain.ProductRepository {
+// InitRepo Initialize the repository
+func InitRepo(db *internal.Database) domain.ProductRepository {
 	return repository.ProductRepositoryImpl{
-		DB:  db,
+		DB: db,
 	}
 }
 
-func initService(repo domain.ProductRepository) domain.Services {
+func InitService(repo domain.ProductRepository) domain.Services {
 	return domain.Services{
 		ProductService: service.ProductServiceImpl{Repository: repo},
 	}
 }
 
-// initEntities initialize the database entities
-func initEntities(db *internal.Database) *controller.Controller {
-	repo := initRepo(db)
-	service := initService(repo)
+// InitEntities Initialize the database entities
+func InitEntities(db *internal.Database) domain.Services {
+	repo := InitRepo(db)
 
-	return &controller.Controller{
-		Services: service,
-	}
+	return InitService(repo)
 }

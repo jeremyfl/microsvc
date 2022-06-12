@@ -6,5 +6,5 @@ import (
 )
 
 type ProductRepository interface {
-	Get(ctx context.Context) *[]model.Product
+	Get(ctx context.Context) []*model.Product
 }
