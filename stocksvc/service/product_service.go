@@ -21,3 +21,11 @@ func (cs *StockServiceImpl) ShowStock(ctx context.Context, productID int) *model
 
 	return cs.Repository.Show(ctx, payload)
 }
+
+func (cs *StockServiceImpl) DecreaseStock(ctx context.Context, productID int) error {
+	return nil
+}
+
+func (cs *StockServiceImpl) IncreaseStock(ctx context.Context, productID int) error {
+	return nil
+}

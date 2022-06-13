@@ -4,6 +4,7 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"stocksvc/handler"
 	"stocksvc/stock"
 )
 
@@ -16,7 +17,7 @@ func Serve() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	rpcHandler := stock.Server{
+	rpcHandler := handler.Handler{
 		Services: entities,
 	}
 
