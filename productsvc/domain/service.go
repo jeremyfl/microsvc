@@ -6,14 +6,10 @@ import (
 )
 
 type Services struct {
-	AuthService
 	ProductService
-}
-
-type AuthService interface {
-	Login(payload ...string) error
 }
 
 type ProductService interface {
 	FetchProduct(ctx context.Context) []*model.Product
+	ShowProduct(ctx context.Context, id *int) *model.Product
 }

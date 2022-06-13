@@ -3,7 +3,7 @@
 # https://gqlgen.com/getting-started/
 
 type Product {
-  id: ID
+  id: Int
   name: String
   price: Float
   description: String
@@ -15,4 +15,5 @@ type Product {
 
 type Query {
   products: [Product]
+  productById(id: Int): Product
 }

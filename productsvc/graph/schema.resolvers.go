@@ -7,7 +7,6 @@ import (
 	"context"
 	generated1 "productsvc/graph/generated"
 	"productsvc/graph/model"
-	"strconv"
 )
 
 func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) {
@@ -16,7 +15,7 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 	products := make([]*model.Product, 0)
 
 	for _, product := range productStore {
-		productId := strconv.FormatUint(uint64(product.ID), 10)
+		productId := int(product.ID)
 
 		products = append(products, &model.Product{
 			ID:          &productId,
@@ -31,6 +30,23 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 	}
 
 	return products, nil
+}
+
+func (r *queryResolver) ProductByID(ctx context.Context, id *int) (*model.Product, error) {
+	productStore := r.Services.ProductService.ShowProduct(ctx, id)
+
+	productId := int(productStore.ID)
+
+	return &model.Product{
+		ID:          &productId,
+		Name:        productStore.Name,
+		Price:       productStore.Price,
+		Description: productStore.Description,
+		Rating:      productStore.Rating,
+		Category:    productStore.Category,
+		Brand:       productStore.Brand,
+		Thumbnail:   productStore.Thumbnail,
+	}, nil
 }
 
 // Query returns generated1.QueryResolver implementation.

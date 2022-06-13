@@ -26,14 +26,14 @@ func initDatabase() *internal.Database {
 
 // initRepo Initialize the repository
 func initRepo(db *internal.Database) domain.ProductRepository {
-	return repository.ProductRepositoryImpl{
+	return &repository.ProductRepositoryImpl{
 		DB: db,
 	}
 }
 
 func initService(repo domain.ProductRepository, stockServiceClient stock.StockServiceClient) domain.Services {
 	return domain.Services{
-		ProductService: service.ProductServiceImpl{
+		ProductService: &service.ProductServiceImpl{
 			Repository:         repo,
 			StockServiceClient: stockServiceClient,
 		},

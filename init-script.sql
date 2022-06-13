@@ -1,3 +1,5 @@
 CREATE DATABASE IF NOT EXISTS products;
 USE products;
 
+CREATE DATABASE IF NOT EXISTS stock;
+USE stock;

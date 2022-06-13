@@ -26,17 +26,17 @@ func loadGrpcConnection() *grpc.ClientConn {
 }
 
 func Serve() {
-	grpcConn := loadGrpcConnection()
-	defer grpcConn.Close()
+	conn := loadGrpcConnection()
+	defer conn.Close()
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
 	}
 
-	stockRpc := stock.NewStockServiceClient(grpcConn)
-	db := initDatabase()
+	stockRpc := stock.NewStockServiceClient(conn)
 
+	db := initDatabase()
 	entities := InitEntities(db, stockRpc)
 
 	r := generated.Config{
