@@ -12,12 +12,14 @@ func Serve() {
 	db := initDatabase()
 	entities := InitEntities(db)
 
+	listener(entities)
+
 	listen, err := net.Listen("tcp", ":9000")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	rpcHandler := handler.Handler{
+	rpcHandler := handler.RpcHandler{
 		Services: entities,
 	}
 

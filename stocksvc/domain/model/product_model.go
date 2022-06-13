@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type Stock struct {
 	gorm.Model
 	ProductID int
-	Stock int
+	Total     int
 }
 
 type Product struct {

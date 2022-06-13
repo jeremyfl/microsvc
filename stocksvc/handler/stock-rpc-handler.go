@@ -7,15 +7,15 @@ import (
 	"stocksvc/stock"
 )
 
-type Handler struct {
+type RpcHandler struct {
 	Services domain.Services
 }
 
-func (s *Handler) FindStockByProduct(ctx context.Context, message *stock.Message) (*stock.Message, error) {
+func (s *RpcHandler) FindStockByProduct(ctx context.Context, message *stock.Message) (*stock.Message, error) {
 	return &stock.Message{Body: 123}, nil
 }
 
-func (s *Handler) FindEmptyStock(ctx context.Context, message *stock.Message) (*stock.Message, error) {
+func (s *RpcHandler) FindEmptyStock(ctx context.Context, message *stock.Message) (*stock.Message, error) {
 	fmt.Println(message)
 
 	return &stock.Message{Body: 123}, nil

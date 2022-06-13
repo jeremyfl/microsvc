@@ -26,3 +26,10 @@ func (cr *StockRepositoryImpl) Show(ctx context.Context, payload *model.Stock) *
 
 	return stock
 }
+
+func (cr *StockRepositoryImpl) Update(ctx context.Context, filter *model.Stock, payload *model.Stock) error {
+	cr.DB.Model(&filter).Updates(payload)
+
+	return nil
+
+}

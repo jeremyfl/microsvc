@@ -5,6 +5,7 @@ import (
 	"stocksvc/domain"
 	"stocksvc/domain/model"
 	"stocksvc/stock"
+	"time"
 )
 
 type StockServiceImpl struct {
@@ -23,9 +24,18 @@ func (cs *StockServiceImpl) ShowStock(ctx context.Context, productID int) *model
 }
 
 func (cs *StockServiceImpl) DecreaseStock(ctx context.Context, productID int) error {
-	return nil
+	currentStock := cs.Repository.Show(ctx, &model.Stock{ProductID: productID})
+	currentStock.Total -= 1
+
+	// simulating the stock service needs to process logic for a while
+	time.Sleep(time.Second * 5)
+
+	return cs.Repository.Update(ctx, currentStock, &model.Stock{Total: currentStock.Total})
 }
 
 func (cs *StockServiceImpl) IncreaseStock(ctx context.Context, productID int) error {
-	return nil
+	currentStock := cs.Repository.Show(ctx, &model.Stock{ProductID: productID})
+	currentStock.Total += 1
+
+	return cs.Repository.Update(ctx, currentStock, &model.Stock{Total: currentStock.Total})
 }
