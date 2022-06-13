@@ -3,3 +3,6 @@ USE products;
 
 CREATE DATABASE IF NOT EXISTS stock;
 USE stock;
+
+CREATE DATABASE IF NOT EXISTS order;
+USE order;
