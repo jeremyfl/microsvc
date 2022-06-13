@@ -12,7 +12,7 @@ import (
 	"syscall"
 )
 
-func initMessageWritter() *kafka.Writer {
+func initMessageWriter() *kafka.Writer {
 	return &kafka.Writer{
 		Addr:     kafka.TCP("localhost:9092"),
 		Topic:    "order.created",
@@ -35,7 +35,7 @@ func Serve() {
 		os.Exit(0)
 	}()
 
-	kw := initMessageWritter()
+	kw := initMessageWriter()
 	defer kw.Close()
 
 	db := initDatabase()

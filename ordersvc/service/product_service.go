@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/segmentio/kafka-go"
 	"ordersvc/domain"
 	"ordersvc/domain/model"
@@ -17,8 +18,13 @@ func (cs *StockServiceImpl) CreateOrder(ctx context.Context, payload *model.Orde
 		return err
 	}
 
+	p, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+
 	m := kafka.Message{
-		Value: []byte("Hello World!"),
+		Value: p,
 	}
 
 	if err := cs.Publisher.WriteMessages(ctx, m); err != nil {
