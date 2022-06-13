@@ -7,6 +7,7 @@ import (
 	"productsvc/internal/gorm"
 	"productsvc/repository"
 	"productsvc/service"
+	"productsvc/stock"
 )
 
 // initDatabase Initialize the database repository
@@ -30,15 +31,18 @@ func initRepo(db *internal.Database) domain.ProductRepository {
 	}
 }
 
-func initService(repo domain.ProductRepository) domain.Services {
+func initService(repo domain.ProductRepository, stockServiceClient stock.StockServiceClient) domain.Services {
 	return domain.Services{
-		ProductService: service.ProductServiceImpl{Repository: repo},
+		ProductService: service.ProductServiceImpl{
+			Repository:         repo,
+			StockServiceClient: stockServiceClient,
+		},
 	}
 }
 
 // InitEntities Initialize the database entities
-func InitEntities(db *internal.Database) domain.Services {
+func InitEntities(db *internal.Database, stockServiceClient stock.StockServiceClient) domain.Services {
 	repo := initRepo(db)
 
-	return initService(repo)
+	return initService(repo, stockServiceClient)
 }

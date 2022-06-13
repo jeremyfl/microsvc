@@ -1,28 +1,51 @@
 package cmd
 
 import (
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"google.golang.org/grpc"
 	"log"
 	"net/http"
 	"os"
 	"productsvc/graph"
 	"productsvc/graph/generated"
-
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
+	"productsvc/stock"
 )
 
 const defaultPort = "8080"
 
+func loadGrpcConnection() *grpc.ClientConn {
+	var conn *grpc.ClientConn
+
+	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %s", err)
+	}
+
+	return conn
+}
+
 func Serve() {
+	grpcConn := loadGrpcConnection()
+	defer grpcConn.Close()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
 	}
 
+	stockRpc := stock.NewStockServiceClient(grpcConn)
 	db := initDatabase()
-	entities := InitEntities(db)
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{Services: entities}}))
+	entities := InitEntities(db, stockRpc)
+
+	r := generated.Config{
+		Resolvers: &graph.Resolver{
+			Services: entities,
+		},
+	}
+
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(r))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
