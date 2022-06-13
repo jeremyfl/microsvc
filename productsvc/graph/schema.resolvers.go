@@ -5,8 +5,8 @@ package graph
 
 import (
 	"context"
-	"customer/graph/generated"
-	"customer/graph/model"
+	generated1 "productsvc/graph/generated"
+	"productsvc/graph/model"
 	"strconv"
 )
 
@@ -33,8 +33,8 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 	return products, nil
 }
 
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
+// Query returns generated1.QueryResolver implementation.
+func (r *Resolver) Query() generated1.QueryResolver { return &queryResolver{r} }
 
 type queryResolver struct{ *Resolver }
 

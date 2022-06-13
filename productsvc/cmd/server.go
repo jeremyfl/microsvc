@@ -1,12 +1,11 @@
-package main
+package cmd
 
 import (
-	"customer/cmd"
-	"customer/graph"
-	"customer/graph/generated"
 	"log"
 	"net/http"
 	"os"
+	"productsvc/graph"
+	"productsvc/graph/generated"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -14,14 +13,14 @@ import (
 
 const defaultPort = "8080"
 
-func main() {
+func Serve() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
 	}
 
-	db := cmd.InitDatabase()
-	entities := cmd.InitEntities(db)
+	db := initDatabase()
+	entities := InitEntities(db)
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{Services: entities}}))
 

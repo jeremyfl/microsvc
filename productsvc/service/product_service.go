@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"customer/domain"
-	"customer/domain/model"
+	"productsvc/domain"
+	"productsvc/domain/model"
 )
 
 type ProductServiceImpl struct {

@@ -1,0 +1,11 @@
+syntax = "proto3";
+package stock;
+option go_package = "../productsvc/stock";
+
+message Stock {
+    string body = 1;
+}
+
+service StockService {
+    rpc FindStock(Stock) returns (Stock) {}
+}

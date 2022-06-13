@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"customer/domain/model"
-	"customer/internal"
 	"golang.org/x/net/context"
+	"productsvc/domain/model"
+	"productsvc/internal"
 )
 
 // ProductRepositoryImpl is the repository structure

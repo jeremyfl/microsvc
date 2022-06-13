@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	model "customer/domain/model"
+	model "productsvc/domain/model"
 
 	mock "github.com/stretchr/testify/mock"
 )

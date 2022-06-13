@@ -2,7 +2,7 @@ package domain
 
 import (
 	"context"
-	"customer/domain/model"
+	"productsvc/domain/model"
 )
 
 type ProductRepository interface {
