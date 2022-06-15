@@ -2,32 +2,24 @@ package service
 
 import (
 	"context"
-	"encoding/json"
-	"github.com/segmentio/kafka-go"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
 )
 
 type StockServiceImpl struct {
 	Repository domain.OrderRepository
-	Publisher  *kafka.Writer
+	MessageBroker domain.MessageBroker
 }
 
 func (cs *StockServiceImpl) CreateOrder(ctx context.Context, payload *model.Order) error {
+	_, span := domain.Tracer.Start(ctx, "CreateOrder")
+	defer span.End()
+
 	if err := cs.Repository.Create(ctx, payload); err != nil {
 		return err
 	}
 
-	p, err := json.Marshal(payload)
-	if err != nil {
-		return err
-	}
-
-	m := kafka.Message{
-		Value: p,
-	}
-
-	if err := cs.Publisher.WriteMessages(ctx, m); err != nil {
+	if err := cs.MessageBroker.Publish(ctx, "order.created", payload); err != nil {
 		return err
 	}
 

@@ -1,10 +1,11 @@
 package cmd
 
 import (
+	"context"
+	"github.com/gofiber/contrib/otelfiber"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/segmentio/kafka-go"
 	"gitlab.com/jeremylo/microsvc/ordersvc/handler"
 	"log"
 	"os"
@@ -12,15 +13,16 @@ import (
 	"syscall"
 )
 
-func initMessageWriter() *kafka.Writer {
-	return &kafka.Writer{
-		Addr:     kafka.TCP("localhost:9092"),
-		Topic:    "order.created",
-		Balancer: &kafka.LeastBytes{},
-	}
-}
-
 func Serve() {
+	ctx := context.Background()
+
+	tp := initTracer()
+	defer func() {
+		if err := tp.Shutdown(ctx); err != nil {
+			log.Printf("Error shutting down tracer provider: %v", err)
+		}
+	}()
+
 	app := fiber.New()
 
 	c := make(chan os.Signal)
@@ -38,9 +40,12 @@ func Serve() {
 	kw := initMessageWriter()
 	defer kw.Close()
 
-	db := initDatabase()
-	entities := InitEntities(db, kw)
+	mb := initMessageBroker(kw, nil)
 
+	db := initDatabase()
+	entities := InitEntities(db, mb)
+
+	app.Use(otelfiber.Middleware("order-svc"))
 	app.Use(recover.New())
 	app.Use(logger.New())
 

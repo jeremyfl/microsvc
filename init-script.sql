@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS product;
-USE product;
+CREATE DATABASE IF NOT EXISTS productsvc;
+USE productsvc;
 
-CREATE DATABASE IF NOT EXISTS stock;
-USE stock;
+CREATE DATABASE IF NOT EXISTS stocksvc;
+USE stocksvc;
 
-CREATE DATABASE IF NOT EXISTS order;
-USE order;
+CREATE DATABASE IF NOT EXISTS ordersvc;
+USE ordersvc;

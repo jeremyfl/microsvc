@@ -9,6 +9,8 @@ services:
       - "3306:3306"
     volumes:
       - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+    networks:
+      - microsvc
 
   redis:
     ports:
@@ -18,25 +20,10 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
-      - "6831:6831/udp"
+      - "14268:14268"
       - "16686:16686"
     networks:
       - microsvc
-
-  hotrod:
-    image: jaegertracing/example-hotrod:latest
-    ports:
-      - "8080:8080"
-    command: [ "all" ]
-    environment:
-      - JAEGER_AGENT_HOST=jaeger
-      # Note: if your application is using Node.js Jaeger Client, you need port 6832,
-      #       unless issue https://github.com/jaegertracing/jaeger/issues/1596 is resolved.
-      - JAEGER_AGENT_PORT=6831
-    networks:
-      - microsvc
-    depends_on:
-      - jaeger
 
 networks:
   microsvc:

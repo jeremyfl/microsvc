@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"context"
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
@@ -13,7 +12,8 @@ type Handler struct {
 }
 
 func (s *Handler) Handle(c *fiber.Ctx) error {
-	ctx := context.Background()
+	ctx, span := domain.Tracer.Start(c.UserContext(), "Handler")
+	defer span.End()
 
 	p := new(model.Order)
 	if err := c.BodyParser(p); err != nil {
