@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
+	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
 	"google.golang.org/grpc"
 	"log"
@@ -10,10 +12,17 @@ import (
 )
 
 func Serve() {
+	ctx := context.Background()
+
+	tp := lib.InitTracer("stock-svc-grpc")
+	defer func() {
+		if err := tp.Shutdown(ctx); err != nil {
+			log.Printf("Error shutting down tracer provider: %v", err)
+		}
+	}()
+
 	db := initDatabase()
 	entities := InitEntities(db)
-
-	//go listener(entities)
 
 	listen, err := net.Listen("tcp", ":9000")
 	if err != nil {

@@ -17,7 +17,7 @@ import (
 func Serve() {
 	ctx := context.Background()
 
-	tp := lib.InitTracer()
+	tp := lib.InitTracer("order-svc")
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)

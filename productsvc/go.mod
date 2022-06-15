@@ -4,11 +4,14 @@ go 1.18
 
 require (
 	github.com/99designs/gqlgen v0.17.10
+	github.com/ravilushqa/otelgqlgen v0.7.0
 	github.com/stretchr/testify v1.7.2
 	github.com/vektah/gqlparser/v2 v2.4.5
-	gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615100423-0fba4a4e08b2
-	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615174614-85a4ed97e4f5
-	golang.org/x/net v0.0.0-20220614195744-fb05da6f9022
+	gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615175719-0f989f080ef1
+	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615175719-0f989f080ef1
+	go.opentelemetry.io/otel v1.7.0
+	go.opentelemetry.io/otel/trace v1.7.0
+	golang.org/x/net v0.0.0-20220615171555-694bf12d69de
 	google.golang.org/grpc v1.47.0
 	gorm.io/driver/mysql v1.3.4
 	gorm.io/gorm v1.23.6
@@ -28,7 +31,7 @@ require (
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/klauspost/compress v1.15.6 // indirect
 	github.com/matryer/moq v0.2.7 // indirect
-	github.com/mitchellh/mapstructure v1.3.1 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.15 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
@@ -36,10 +39,9 @@ require (
 	github.com/stretchr/objx v0.1.0 // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	go.opentelemetry.io/otel v1.7.0 // indirect
+	go.opentelemetry.io/contrib v1.7.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.7.0 // indirect
 	go.opentelemetry.io/otel/sdk v1.7.0 // indirect
-	go.opentelemetry.io/otel/trace v1.7.0 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3 // indirect
 	golang.org/x/sys v0.0.0-20220614162138-6c1b26c55098 // indirect
 	golang.org/x/text v0.3.7 // indirect

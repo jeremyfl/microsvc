@@ -7,9 +7,14 @@ import (
 	"context"
 	generated1 "gitlab.com/jeremylo/microsvc/productsvc/graph/generated"
 	"gitlab.com/jeremylo/microsvc/productsvc/graph/model"
+	"go.opentelemetry.io/otel/attribute"
+	oteltrace "go.opentelemetry.io/otel/trace"
 )
 
 func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) {
+	_, span := r.Tracer.Start(ctx, "Products")
+	defer span.End()
+
 	productStore := r.Services.ProductService.FetchProduct(ctx)
 
 	products := make([]*model.Product, 0)
@@ -33,6 +38,9 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 }
 
 func (r *queryResolver) ProductByID(ctx context.Context, id *int) (*model.Product, error) {
+	_, span := r.Tracer.Start(ctx, "ProductByID", oteltrace.WithAttributes(attribute.Int("id", *id)))
+	defer span.End()
+
 	productStore := r.Services.ProductService.ShowProduct(ctx, id)
 
 	productId := int(productStore.ID)

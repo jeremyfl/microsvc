@@ -1,6 +1,9 @@
 package graph
 
-import "gitlab.com/jeremylo/microsvc/productsvc/domain"
+import (
+	"gitlab.com/jeremylo/microsvc/productsvc/domain"
+	"go.opentelemetry.io/otel/trace"
+)
 
 // This file will not be regenerated automatically.
 //
@@ -8,4 +11,5 @@ import "gitlab.com/jeremylo/microsvc/productsvc/domain"
 
 type Resolver struct {
 	Services domain.Services
+	Tracer trace.Tracer
 }

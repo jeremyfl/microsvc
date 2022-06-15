@@ -14,12 +14,10 @@ type ProductServiceImpl struct {
 }
 
 func (cs *ProductServiceImpl) FetchProduct(ctx context.Context) []*model.Product {
-	x, err := cs.StockServiceClient.FindStockByProduct(ctx, &stock.Message{Body: 123})
+	_, err := cs.StockServiceClient.FindStockByProduct(ctx, &stock.Message{Body: 123})
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-
-	fmt.Println(x.Body)
 
 	return cs.Repository.Get(ctx)
 }

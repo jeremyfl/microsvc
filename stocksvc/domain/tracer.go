@@ -2,4 +2,4 @@ package domain
 
 import "go.opentelemetry.io/otel"
 
-var Tracer = otel.Tracer("ordersvc-api")
+var Tracer = otel.Tracer("stocksvc-listener")

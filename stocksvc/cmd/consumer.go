@@ -3,15 +3,21 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
 	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
 	"log"
 )
 
+func Listen(entities domain.Services) {
+	tp := lib.InitTracer("stocksvc-listener")
+	defer func() {
+		if err := tp.Shutdown(context.Background()); err != nil {
+			log.Printf("Error shutting down tracer provider: %v", err)
+		}
+	}()
 
-
-func listener(entities domain.Services) {
-	r := initMessageReader()
+	r := lib.InitMessageReader("order.created", "stocksvc-listener")
 	h := handler.OrderCreatedHandler{Services: entities}
 
 	fmt.Println("Listening to order message")
