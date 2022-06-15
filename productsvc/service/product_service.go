@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
+	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/productsvc/domain"
 	"gitlab.com/jeremylo/microsvc/productsvc/domain/model"
-	"gitlab.com/jeremylo/microsvc/productsvc/stock"
 )
 
 type ProductServiceImpl struct {

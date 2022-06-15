@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 	"fmt"
+	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
-	"gitlab.com/jeremylo/microsvc/stocksvc/stock"
 )
 
 type RpcHandler struct {
