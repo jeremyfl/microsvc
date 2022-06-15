@@ -11,7 +11,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
 
-func InitTracer() *sdktrace.TracerProvider {
+func InitTracer(serviceName string) *sdktrace.TracerProvider {
 	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://127.0.0.1:14268/api/traces")))
 	if err != nil {
 		log.Fatal(err)
@@ -22,7 +22,7 @@ func InitTracer() *sdktrace.TracerProvider {
 		sdktrace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceNameKey.String("order-svc"),
+				semconv.ServiceNameKey.String(serviceName),
 			)),
 	)
 	otel.SetTracerProvider(tp)

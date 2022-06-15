@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/ordersvc/handler/http"
 	"log"
 	"os"
@@ -16,7 +17,7 @@ import (
 func Serve() {
 	ctx := context.Background()
 
-	tp := initTracer()
+	tp := lib.InitTracer()
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)
@@ -37,7 +38,7 @@ func Serve() {
 		os.Exit(0)
 	}()
 
-	kw := initMessageWriter()
+	kw := lib.InitMessageWriter()
 	defer kw.Close()
 
 	mb := initMessageBroker(kw, nil)

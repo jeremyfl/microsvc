@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"context"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
+	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/productsvc/graph"
 	"gitlab.com/jeremylo/microsvc/productsvc/graph/generated"
 	"google.golang.org/grpc"
@@ -26,6 +28,15 @@ func loadGrpcConnection() *grpc.ClientConn {
 }
 
 func Serve() {
+	ctx := context.Background()
+
+	tp := lib.InitTracer()
+	defer func() {
+		if err := tp.Shutdown(ctx); err != nil {
+			log.Printf("Error shutting down tracer provider: %v", err)
+		}
+	}()
+
 	conn := loadGrpcConnection()
 	defer conn.Close()
 

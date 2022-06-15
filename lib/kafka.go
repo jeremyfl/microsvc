@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-func InitMessageReader(topic string) *kafka.Reader {
+func InitMessageReader(topic, groupId string) *kafka.Reader {
 	r := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:   []string{"localhost:9092"},
 		Topic:     topic,
 		Partition: 0,
-		GroupID:   "ordersvc-listener",
+		GroupID:   groupId,
 	})
 
 	return r

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/ordersvc/handler/event"
 	"log"
 )
@@ -14,7 +15,7 @@ type consumerTopic struct {
 func Listen() {
 	ctx := context.Background()
 
-	tp := initTracer()
+	tp := lib.InitTracer()
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)
@@ -41,7 +42,7 @@ func Listen() {
 	}
 
 	for _, consumer := range consumers {
-		r := initMessageReader("stock.exceeded-amount")
+		r := lib.InitMessageReader("stock.exceeded-amount")
 
 		for {
 			message, err := r.ReadMessage(ctx)
