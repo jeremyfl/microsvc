@@ -2,7 +2,7 @@ package domain
 
 import (
 	"context"
-	"ordersvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
 )
 
 type OrderRepository interface {

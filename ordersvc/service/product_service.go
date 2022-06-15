@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/segmentio/kafka-go"
-	"ordersvc/domain"
-	"ordersvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
 )
 
 type StockServiceImpl struct {

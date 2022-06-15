@@ -1,6 +1,6 @@
 package main
 
-import "ordersvc/cmd"
+import "gitlab.com/jeremylo/microsvc/ordersvc/cmd"
 
 func main() {
 	cmd.Serve()

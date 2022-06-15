@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/ordersvc/internal"
 	"golang.org/x/net/context"
-	"ordersvc/domain/model"
-	"ordersvc/internal"
 )
 
 // OrderRepositoryImpl is the repository structure

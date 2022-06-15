@@ -2,12 +2,12 @@ package cmd
 
 import (
 	"github.com/segmentio/kafka-go"
-	"ordersvc/domain"
-	"ordersvc/domain/model"
-	"ordersvc/internal"
-	"ordersvc/internal/gorm"
-	"ordersvc/repository"
-	"ordersvc/service"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/ordersvc/internal"
+	"gitlab.com/jeremylo/microsvc/ordersvc/internal/gorm"
+	"gitlab.com/jeremylo/microsvc/ordersvc/repository"
+	"gitlab.com/jeremylo/microsvc/ordersvc/service"
 )
 
 // initDatabase Initialize the database repository
@@ -34,7 +34,7 @@ func initRepo(db *internal.Database) domain.OrderRepository {
 func initService(repo domain.OrderRepository, publisher *kafka.Writer) domain.Services {
 	return domain.Services{
 		StockService: &service.StockServiceImpl{
-			Publisher: publisher,
+			Publisher:  publisher,
 			Repository: repo,
 		},
 	}

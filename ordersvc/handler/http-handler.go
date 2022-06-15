@@ -3,9 +3,9 @@ package handler
 import (
 	"context"
 	"github.com/gofiber/fiber/v2"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
 	"net/http"
-	"ordersvc/domain"
-	"ordersvc/domain/model"
 )
 
 type Handler struct {
