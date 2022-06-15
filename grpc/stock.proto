@@ -1,6 +1,8 @@
 syntax = "proto3";
 package stock;
 
+option go_package = "/stock";
+
 message Message {
     int32 body = 1;
 }
