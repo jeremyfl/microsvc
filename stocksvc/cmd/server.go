@@ -13,7 +13,7 @@ func Serve() {
 	db := initDatabase()
 	entities := InitEntities(db)
 
-	go listener(entities)
+	//go listener(entities)
 
 	listen, err := net.Listen("tcp", ":9000")
 	if err != nil {

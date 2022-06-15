@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"context"
+	"fmt"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
@@ -35,6 +37,14 @@ func Serve() {
 	}
 
 	stockRpc := stock.NewStockServiceClient(conn)
+
+	x, err := stockRpc.FindStockByProduct(context.Background(), &stock.Message{Body: 123})
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	fmt.Println(x.Body)
+	return
 
 	db := initDatabase()
 	entities := InitEntities(db, stockRpc)
