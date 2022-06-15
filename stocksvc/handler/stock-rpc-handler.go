@@ -12,7 +12,7 @@ type RpcHandler struct {
 }
 
 func (s *RpcHandler) FindStockByProduct(ctx context.Context, message *stock.Message) (*stock.Message, error) {
-	return &stock.Message{Body: 123}, nil
+	return &stock.Message{Body: message.Body}, nil
 }
 
 func (s *RpcHandler) FindEmptyStock(ctx context.Context, message *stock.Message) (*stock.Message, error) {
