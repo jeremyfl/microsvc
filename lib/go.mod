@@ -1,6 +1,6 @@
 module gitlab.com/jeremylo/microsvc/lib
 
-go 1.18
+go 1.19
 
 require (
 	github.com/segmentio/kafka-go v0.4.32
