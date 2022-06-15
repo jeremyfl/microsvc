@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"gitlab.com/jeremylo/microsvc/productsvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/productsvc/internal"
 	"golang.org/x/net/context"
-	"productsvc/domain/model"
-	"productsvc/internal"
 )
 
 // ProductRepositoryImpl is the repository structure

@@ -3,13 +3,13 @@ package cmd
 import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"gitlab.com/jeremylo/microsvc/productsvc/graph"
+	"gitlab.com/jeremylo/microsvc/productsvc/graph/generated"
+	"gitlab.com/jeremylo/microsvc/productsvc/stock"
 	"google.golang.org/grpc"
 	"log"
 	"net/http"
 	"os"
-	"productsvc/graph"
-	"productsvc/graph/generated"
-	"productsvc/stock"
 )
 
 const defaultPort = "8080"

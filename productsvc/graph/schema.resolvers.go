@@ -5,8 +5,8 @@ package graph
 
 import (
 	"context"
-	generated1 "productsvc/graph/generated"
-	"productsvc/graph/model"
+	generated1 "gitlab.com/jeremylo/microsvc/productsvc/graph/generated"
+	"gitlab.com/jeremylo/microsvc/productsvc/graph/model"
 )
 
 func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) {

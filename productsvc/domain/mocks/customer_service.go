@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	model "productsvc/domain/model"
+	model "gitlab.com/jeremylo/microsvc/productsvc/domain/model"
 
 	mock "github.com/stretchr/testify/mock"
 )

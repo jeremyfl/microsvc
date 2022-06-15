@@ -7,7 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"productsvc/graph/model"
+	"gitlab.com/jeremylo/microsvc/productsvc/graph/model"
 	"strconv"
 	"sync"
 

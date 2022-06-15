@@ -1,6 +1,6 @@
 package main
 
-import "productsvc/cmd"
+import "gitlab.com/jeremylo/microsvc/productsvc/cmd"
 
 func main() {
 	cmd.Serve()

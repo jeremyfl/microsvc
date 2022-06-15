@@ -1,6 +1,6 @@
 package graph
 
-import "productsvc/domain"
+import "gitlab.com/jeremylo/microsvc/productsvc/domain"
 
 // This file will not be regenerated automatically.
 //

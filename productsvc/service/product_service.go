@@ -2,13 +2,13 @@ package service
 
 import (
 	"context"
-	"productsvc/domain"
-	"productsvc/domain/model"
-	"productsvc/stock"
+	"gitlab.com/jeremylo/microsvc/productsvc/domain"
+	"gitlab.com/jeremylo/microsvc/productsvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/productsvc/stock"
 )
 
 type ProductServiceImpl struct {
-	Repository domain.ProductRepository
+	Repository         domain.ProductRepository
 	StockServiceClient stock.StockServiceClient
 }
 
