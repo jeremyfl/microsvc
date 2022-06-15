@@ -3,25 +3,15 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/segmentio/kafka-go"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
 	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
 	"log"
 )
 
-func newReader() *kafka.Reader {
-	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{"localhost:9092"},
-		Topic:     "order.created",
-		Partition: 0,
-		GroupID:   "stocksvc-listener",
-	})
 
-	return r
-}
 
 func listener(entities domain.Services) {
-	r := newReader()
+	r := initMessageReader()
 	h := handler.OrderCreatedHandler{Services: entities}
 
 	fmt.Println("Listening to order message")

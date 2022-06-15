@@ -58,9 +58,20 @@ func InitEntities(db *internal.Database, messageBroker domain.MessageBroker) dom
 	return initService(repo, messageBroker)
 }
 
+func initMessageReader(topic string) *kafka.Reader {
+	r := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:   []string{"localhost:9092"},
+		Topic:     topic,
+		Partition: 0,
+		GroupID:   "ordersvc-listener",
+	})
+
+	return r
+}
+
 func initMessageWriter() *kafka.Writer {
 	return &kafka.Writer{
-		Addr: kafka.TCP("localhost:9092"),
+		Addr:         kafka.TCP("localhost:9092"),
 		Balancer:     &kafka.LeastBytes{},
 		BatchTimeout: 10 * time.Millisecond,
 	}

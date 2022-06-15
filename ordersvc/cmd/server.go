@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"gitlab.com/jeremylo/microsvc/ordersvc/handler"
+	"gitlab.com/jeremylo/microsvc/ordersvc/handler/http"
 	"log"
 	"os"
 	"os/signal"
@@ -41,7 +41,6 @@ func Serve() {
 	defer kw.Close()
 
 	mb := initMessageBroker(kw, nil)
-
 	db := initDatabase()
 	entities := InitEntities(db, mb)
 
@@ -49,7 +48,7 @@ func Serve() {
 	app.Use(recover.New())
 	app.Use(logger.New())
 
-	orderHandler := handler.Handler{Services: entities}
+	orderHandler := http.Handler{Services: entities}
 	app.Post("/api/v1/orders", orderHandler.Handle)
 
 	if err := app.Listen(":3000"); err != nil {

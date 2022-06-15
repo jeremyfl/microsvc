@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/segmentio/kafka-go"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain/model"
 	"gitlab.com/jeremylo/microsvc/stocksvc/internal"
@@ -8,6 +9,17 @@ import (
 	"gitlab.com/jeremylo/microsvc/stocksvc/repository"
 	"gitlab.com/jeremylo/microsvc/stocksvc/service"
 )
+
+func initMessageReader() *kafka.Reader {
+	r := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:   []string{"localhost:9092"},
+		Topic:     "order.created",
+		Partition: 0,
+		GroupID:   "stocksvc-listener",
+	})
+
+	return r
+}
 
 // initDatabase Initialize the database repository
 func initDatabase() *internal.Database {
