@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
-	"gitlab.com/jeremylo/microsvc/stocksvc/stock"
 	"google.golang.org/grpc"
 	"log"
 	"net"

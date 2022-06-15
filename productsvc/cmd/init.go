@@ -1,13 +1,13 @@
 package cmd
 
 import (
+	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/productsvc/domain"
 	"gitlab.com/jeremylo/microsvc/productsvc/domain/model"
 	"gitlab.com/jeremylo/microsvc/productsvc/internal"
 	"gitlab.com/jeremylo/microsvc/productsvc/internal/gorm"
 	"gitlab.com/jeremylo/microsvc/productsvc/repository"
 	"gitlab.com/jeremylo/microsvc/productsvc/service"
-	"gitlab.com/jeremylo/microsvc/productsvc/stock"
 )
 
 // initDatabase Initialize the database repository
