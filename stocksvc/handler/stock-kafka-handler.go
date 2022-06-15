@@ -22,7 +22,7 @@ func (oc *OrderCreatedHandler) Handle(ctx context.Context, message []byte) error
 		return err
 	}
 
-	fmt.Println("OrderCreatedHandler:", ocp)
+	fmt.Println(ocp)
 
 	if err := oc.Services.DecreaseStock(ctx, ocp.ProductID); err != nil {
 		return err

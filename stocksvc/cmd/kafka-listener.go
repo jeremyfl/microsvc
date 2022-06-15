@@ -31,7 +31,6 @@ func listener(entities domain.Services) {
 
 		message, err := r.ReadMessage(ctx)
 		if err != nil {
-			fmt.Println(err.Error())
 			break
 		}
 
