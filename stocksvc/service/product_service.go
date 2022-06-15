@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
-	"stocksvc/domain"
-	"stocksvc/domain/model"
-	"stocksvc/stock"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/stocksvc/stock"
 )
 
 type StockServiceImpl struct {

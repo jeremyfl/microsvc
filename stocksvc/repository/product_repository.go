@@ -1,9 +1,9 @@
 package repository
 
 import (
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/stocksvc/internal"
 	"golang.org/x/net/context"
-	"stocksvc/domain/model"
-	"stocksvc/internal"
 )
 
 // StockRepositoryImpl is the repository structure

@@ -1,6 +1,6 @@
 package main
 
-import "stocksvc/cmd"
+import "gitlab.com/jeremylo/microsvc/stocksvc/cmd"
 
 func main() {
 	cmd.Serve()

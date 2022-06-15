@@ -2,7 +2,7 @@ package domain
 
 import (
 	"context"
-	"stocksvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain/model"
 )
 
 type Services struct {

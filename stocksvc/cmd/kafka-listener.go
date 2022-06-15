@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/segmentio/kafka-go"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
+	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
 	"log"
-	"stocksvc/domain"
-	"stocksvc/handler"
 )
 
 func newReader() *kafka.Reader {

@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 	"fmt"
-	"stocksvc/domain"
-	"stocksvc/stock"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
+	"gitlab.com/jeremylo/microsvc/stocksvc/stock"
 )
 
 type RpcHandler struct {
@@ -20,4 +20,3 @@ func (s *RpcHandler) FindEmptyStock(ctx context.Context, message *stock.Message)
 
 	return &stock.Message{Body: 123}, nil
 }
-

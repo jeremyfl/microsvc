@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	"stocksvc/domain"
-	"stocksvc/domain/model"
-	"stocksvc/internal"
-	"stocksvc/internal/gorm"
-	"stocksvc/repository"
-	"stocksvc/service"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain/model"
+	"gitlab.com/jeremylo/microsvc/stocksvc/internal"
+	"gitlab.com/jeremylo/microsvc/stocksvc/internal/gorm"
+	"gitlab.com/jeremylo/microsvc/stocksvc/repository"
+	"gitlab.com/jeremylo/microsvc/stocksvc/service"
 )
 
 // initDatabase Initialize the database repository

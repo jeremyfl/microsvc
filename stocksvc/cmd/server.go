@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
+	"gitlab.com/jeremylo/microsvc/stocksvc/stock"
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	"stocksvc/handler"
-	"stocksvc/stock"
 )
 
 func Serve() {

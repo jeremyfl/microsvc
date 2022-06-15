@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"stocksvc/domain"
+	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
 )
 
 type OrderCreatedHandler struct {
