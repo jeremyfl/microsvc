@@ -70,7 +70,7 @@ func consume(consumers []consumerTopic) {
 func Listen() {
 	ctx := context.Background()
 
-	tp := lib.InitTracer("ordersvc-consumer")
+	tp := lib.InitTracer("stocksvc-consumer")
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)

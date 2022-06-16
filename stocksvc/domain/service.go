@@ -12,6 +12,6 @@ type Services struct {
 type StockService interface {
 	FetchStock(ctx context.Context) []*model.Stock
 	ShowStock(ctx context.Context, productID int) *model.Stock
-	DecreaseStock(ctx context.Context, productID int) error
-	IncreaseStock(ctx context.Context, productID int) error
+	DecreaseStock(ctx context.Context, payload *model.OrderPayload) error
+	IncreaseStock(ctx context.Context, payload *model.OrderPayload) error
 }

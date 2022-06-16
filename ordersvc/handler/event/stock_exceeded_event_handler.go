@@ -3,6 +3,7 @@ package event
 import (
 	"context"
 	"encoding/json"
+	log "github.com/sirupsen/logrus"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain/model"
 )
@@ -20,10 +21,11 @@ func (h *Handler) StockExceededConsumer(message []byte) error {
 	defer span.End()
 
 	var canceledOrder model.Order
-
 	if err := json.Unmarshal(message, &canceledOrder); err != nil {
 		return err
 	}
+
+	log.WithField("product_id", canceledOrder.ProductID).Infoln("there's canceled order event")
 
 	if err := h.Services.CancelOrder(ctx, &canceledOrder); err != nil {
 		return err

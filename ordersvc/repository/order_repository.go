@@ -12,20 +12,20 @@ type OrderRepositoryImpl struct {
 	DB *internal.Database
 }
 
-func (cr *OrderRepositoryImpl) Create(ctx context.Context, payload *model.Order) error {
+func (cr *OrderRepositoryImpl) Create(ctx context.Context, payload *model.Order) (*model.Order, error) {
 	_, span := domain.Tracer.Start(ctx, "Create")
 	defer span.End()
 
 	cr.DB.Create(payload)
 
-	return nil
+	return payload, nil
 }
 
 func (cr *OrderRepositoryImpl) Update(ctx context.Context, filter, payload *model.Order) error {
 	_, span := domain.Tracer.Start(ctx, "Create")
 	defer span.End()
 
-	cr.DB.Model(filter).Updates(payload)
+	cr.DB.Model(&filter).Where("id", filter.ID).Updates(payload)
 
 	return nil
 }

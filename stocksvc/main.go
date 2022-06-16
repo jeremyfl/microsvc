@@ -1,7 +1,22 @@
 package main
 
-import "gitlab.com/jeremylo/microsvc/stocksvc/cmd"
+import (
+	"gitlab.com/jeremylo/microsvc/stocksvc/cmd"
+	"os"
+)
 
 func main() {
-	cmd.Serve()
+	var argsRaw = os.Args
+	flag := argsRaw[1]
+
+	switch flag {
+	case "listen":
+		cmd.Listen()
+
+		return
+	default:
+		cmd.Serve()
+
+		return
+	}
 }

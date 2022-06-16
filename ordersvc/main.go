@@ -12,7 +12,11 @@ func main() {
 	switch flag {
 	case "listen":
 		cmd.Listen()
+
+		return
 	default:
 		cmd.Serve()
+
+		return
 	}
 }

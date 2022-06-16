@@ -28,8 +28,7 @@ func (cr *StockRepositoryImpl) Show(ctx context.Context, payload *model.Stock) *
 }
 
 func (cr *StockRepositoryImpl) Update(ctx context.Context, filter *model.Stock, payload *model.Stock) error {
-	cr.DB.Model(&filter).Updates(payload)
+	cr.DB.Model(&filter).Where("product_id", filter.ProductID).Updates(payload)
 
 	return nil
-
 }
