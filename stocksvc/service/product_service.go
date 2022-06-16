@@ -10,6 +10,7 @@ import (
 type StockServiceImpl struct {
 	Repository         domain.StockRepository
 	StockServiceClient stock.StockServiceClient
+	MessageBroker      domain.MessageBroker
 }
 
 func (cs *StockServiceImpl) FetchStock(ctx context.Context) []*model.Stock {

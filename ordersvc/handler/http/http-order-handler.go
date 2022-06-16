@@ -20,7 +20,7 @@ func (s *Handler) Handle(c *fiber.Ctx) error {
 		return err
 	}
 
-	if err := s.Services.StockService.CreateOrder(ctx, p); err != nil {
+	if err := s.Services.OrderService.CreateOrder(ctx, p); err != nil {
 		return c.Status(http.StatusInternalServerError).SendString(err.Error())
 	}
 

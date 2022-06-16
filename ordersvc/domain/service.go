@@ -6,9 +6,10 @@ import (
 )
 
 type Services struct {
-	StockService
+	OrderService
 }
 
-type StockService interface {
+type OrderService interface {
 	CreateOrder(ctx context.Context, payload *model.Order) error
+	CancelOrder(ctx context.Context, payload *model.Order) error
 }

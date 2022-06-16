@@ -20,3 +20,12 @@ func (cr *OrderRepositoryImpl) Create(ctx context.Context, payload *model.Order)
 
 	return nil
 }
+
+func (cr *OrderRepositoryImpl) Update(ctx context.Context, filter, payload *model.Order) error {
+	_, span := domain.Tracer.Start(ctx, "Create")
+	defer span.End()
+
+	cr.DB.Model(filter).Updates(payload)
+
+	return nil
+}

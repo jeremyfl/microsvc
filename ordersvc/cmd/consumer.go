@@ -3,13 +3,73 @@ package cmd
 import (
 	"context"
 	"gitlab.com/jeremylo/microsvc/lib"
+	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
 	"gitlab.com/jeremylo/microsvc/ordersvc/handler/event"
 	"log"
+	"sync"
 )
 
 type consumerTopic struct {
-	topic   string
-	handler func(message []byte) error
+	topic    string
+	handler  func(message []byte) error
+	dlqTopic string
+}
+
+func consumersRoute(entities domain.Services) []consumerTopic {
+	stockHandler := &event.Handler{Services: entities}
+
+	return []consumerTopic{
+		{
+			"stock.exceeded-amount",
+			stockHandler.StockExceededConsumer,
+			"stock.exceeded-amount.dlq",
+		},
+		{
+			"product.deleted",
+			stockHandler.GenericHandler,
+			"product.deleted.dlq",
+		},
+	}
+}
+
+func consume(consumers []consumerTopic) {
+	var wg sync.WaitGroup
+	for _, consumer := range consumers {
+		wg.Add(1)
+		go func(consumer consumerTopic, wg *sync.WaitGroup) {
+			defer wg.Done()
+			r := lib.InitMessageReader(consumer.topic, "ordersvc-consumer")
+
+			for {
+				ctx := context.Background()
+
+				message, err := r.ReadMessage(ctx)
+				if err != nil {
+					log.Println(err.Error())
+
+					break
+				}
+
+				if err = consumer.handler(message.Value); err != nil {
+					log.Println(err.Error())
+
+					break
+				}
+
+				if err = r.CommitMessages(ctx, message); err != nil {
+					log.Println("error when committing", err.Error())
+				}
+			}
+
+			if err := r.Close(); err != nil {
+				log.Fatal("failed to close reader:", err)
+			}
+
+			wg.Done()
+		}(consumer, &wg)
+	}
+
+	wg.Wait()
 }
 
 func Listen() {
@@ -22,46 +82,11 @@ func Listen() {
 		}
 	}()
 
-	mb := initMessageBroker(nil, nil)
+	w := lib.InitMessageWriter()
+	mb := initMessageBroker(w, nil)
 	db := initDatabase()
 	entities := InitEntities(db, mb)
+	route := consumersRoute(entities)
 
-	stockHandler := &event.Handler{
-		Services: entities,
-	}
-
-	consumers := []consumerTopic{
-		{
-			"stock.exceeded-amount",
-			stockHandler.StockExceededConsumer,
-		},
-		{
-			"product.deleted",
-			stockHandler.ProductDeleted,
-		},
-	}
-
-	for _, consumer := range consumers {
-		r := lib.InitMessageReader("stock.exceeded-amount", "ordersvc-consumer")
-
-		for {
-			message, err := r.ReadMessage(ctx)
-			if err != nil {
-				break
-			}
-
-			if err = consumer.handler(message.Value); err != nil {
-				break
-			}
-
-			if err = r.CommitMessages(ctx, message); err != nil {
-				log.Println("error when committing", err.Error())
-			}
-		}
-
-		if err := r.Close(); err != nil {
-			log.Fatal("failed to close reader:", err)
-		}
-	}
-
+	consume(route)
 }

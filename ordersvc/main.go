@@ -1,7 +1,18 @@
 package main
 
-import "gitlab.com/jeremylo/microsvc/ordersvc/cmd"
+import (
+	"gitlab.com/jeremylo/microsvc/ordersvc/cmd"
+	"os"
+)
 
 func main() {
-	cmd.Serve()
+	var argsRaw = os.Args
+	flag := argsRaw[1]
+
+	switch flag {
+	case "listen":
+		cmd.Listen()
+	default:
+		cmd.Serve()
+	}
 }

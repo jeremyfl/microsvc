@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/lib"
-	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
+	grpc2 "gitlab.com/jeremylo/microsvc/stocksvc/handler/grpc"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -29,7 +29,7 @@ func Serve() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	rpcHandler := handler.RpcHandler{
+	rpcHandler := grpc2.RpcHandler{
 		Services: entities,
 	}
 

@@ -2,46 +2,86 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
-	"gitlab.com/jeremylo/microsvc/stocksvc/handler"
+	"gitlab.com/jeremylo/microsvc/stocksvc/handler/event"
 	"log"
+	"sync"
 )
 
-func Listen(entities domain.Services) {
-	tp := lib.InitTracer("stocksvc-listener")
+type consumerTopic struct {
+	topic    string
+	handler  func(message []byte) error
+	dlqTopic string
+}
+
+func consumersRoute(entities domain.Services) []consumerTopic {
+	stockHandler := &event.Handler{Services: entities}
+
+	return []consumerTopic{
+		{
+			"order.created",
+			stockHandler.OrderCreated,
+			"order.created.dlq",
+		},
+	}
+}
+
+func consume(consumers []consumerTopic) {
+	var wg sync.WaitGroup
+	for _, consumer := range consumers {
+		wg.Add(1)
+		go func(consumer consumerTopic, wg *sync.WaitGroup) {
+			defer wg.Done()
+			r := lib.InitMessageReader(consumer.topic, "ordersvc-consumer")
+
+			for {
+				ctx := context.Background()
+
+				message, err := r.ReadMessage(ctx)
+				if err != nil {
+					log.Println(err.Error())
+
+					break
+				}
+
+				if err = consumer.handler(message.Value); err != nil {
+					log.Println(err.Error())
+
+					break
+				}
+
+				if err = r.CommitMessages(ctx, message); err != nil {
+					log.Println("error when committing", err.Error())
+				}
+			}
+
+			if err := r.Close(); err != nil {
+				log.Fatal("failed to close reader:", err)
+			}
+
+			wg.Done()
+		}(consumer, &wg)
+	}
+
+	wg.Wait()
+}
+
+func Listen() {
+	ctx := context.Background()
+
+	tp := lib.InitTracer("ordersvc-consumer")
 	defer func() {
-		if err := tp.Shutdown(context.Background()); err != nil {
+		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)
 		}
 	}()
 
-	r := lib.InitMessageReader("order.created", "stocksvc-listener")
-	h := handler.OrderCreatedHandler{Services: entities}
+	w := lib.InitMessageWriter()
+	mb := initMessageBroker(w, nil)
+	db := initDatabase()
+	entities := InitEntities(db, mb)
+	route := consumersRoute(entities)
 
-	fmt.Println("Listening to order message")
-
-	for {
-		ctx := context.Background()
-
-		message, err := r.ReadMessage(ctx)
-		if err != nil {
-			break
-		}
-
-		if err = h.Handle(ctx, message.Value); err != nil {
-			log.Println("error when processing", err.Error())
-
-			break
-		}
-
-		if err = r.CommitMessages(ctx, message); err != nil {
-			log.Println("error when committing", err.Error())
-		}
-	}
-
-	if err := r.Close(); err != nil {
-		log.Fatal("failed to close reader:", err)
-	}
+	consume(route)
 }

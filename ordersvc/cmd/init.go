@@ -33,7 +33,7 @@ func initRepo(db *internal.Database) domain.OrderRepository {
 
 func initService(repo domain.OrderRepository, messageBroker domain.MessageBroker) domain.Services {
 	return domain.Services{
-		StockService: &service.StockServiceImpl{
+		OrderService: &service.StockServiceImpl{
 			MessageBroker: messageBroker,
 			Repository:    repo,
 		},

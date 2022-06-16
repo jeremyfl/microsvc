@@ -10,17 +10,6 @@ import (
 	"gitlab.com/jeremylo/microsvc/stocksvc/service"
 )
 
-func initMessageReader() *kafka.Reader {
-	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{"localhost:9092"},
-		Topic:     "order.created",
-		Partition: 0,
-		GroupID:   "stocksvc-listener",
-	})
-
-	return r
-}
-
 // initDatabase Initialize the database repository
 func initDatabase() *internal.Database {
 	db, err := gorm.NewClient()
@@ -42,17 +31,26 @@ func initRepo(db *internal.Database) domain.StockRepository {
 	}
 }
 
-func initService(repo domain.StockRepository) domain.Services {
+func initService(repo domain.StockRepository, messageBroker domain.MessageBroker) domain.Services {
 	return domain.Services{
 		StockService: &service.StockServiceImpl{
-			Repository: repo,
+			MessageBroker: messageBroker,
+			Repository:    repo,
 		},
 	}
 }
 
+
 // InitEntities Initialize the database entities
-func InitEntities(db *internal.Database) domain.Services {
+func InitEntities(db *internal.Database, messageBroker domain.MessageBroker) domain.Services {
 	repo := initRepo(db)
 
-	return initService(repo)
+	return initService(repo, messageBroker)
+}
+
+func initMessageBroker(writer *kafka.Writer, reader *kafka.Reader) domain.MessageBroker {
+	return &domain.MessageBrokerImpl{
+		Writer: writer,
+		Reader: reader,
+	}
 }

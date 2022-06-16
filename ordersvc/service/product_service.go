@@ -25,3 +25,18 @@ func (cs *StockServiceImpl) CreateOrder(ctx context.Context, payload *model.Orde
 
 	return nil
 }
+
+func (cs *StockServiceImpl) CancelOrder(ctx context.Context, payload *model.Order) error {
+	_, span := domain.Tracer.Start(ctx, "CreateOrder")
+	defer span.End()
+
+	if err := cs.Repository.Update(ctx, payload, &model.Order{IsCanceled: true}); err != nil {
+		return err
+	}
+
+	if err := cs.MessageBroker.Publish(ctx, "order.canceled", payload); err != nil {
+		return err
+	}
+
+	return nil
+}
