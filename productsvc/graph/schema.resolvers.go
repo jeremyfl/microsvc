@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+
 	generated1 "gitlab.com/jeremylo/microsvc/productsvc/graph/generated"
 	"gitlab.com/jeremylo/microsvc/productsvc/graph/model"
 	"go.opentelemetry.io/otel/attribute"
@@ -31,6 +32,7 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 			Category:    product.Category,
 			Brand:       product.Brand,
 			Thumbnail:   product.Thumbnail,
+			Stock:       product.Stock,
 		})
 	}
 

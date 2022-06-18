@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"fmt"
+	log "github.com/sirupsen/logrus"
 	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/productsvc/domain"
 	"gitlab.com/jeremylo/microsvc/productsvc/domain/model"
@@ -14,12 +14,21 @@ type ProductServiceImpl struct {
 }
 
 func (cs *ProductServiceImpl) FetchProduct(ctx context.Context) []*model.Product {
-	_, err := cs.StockServiceClient.FindStockByProduct(ctx, &stock.Message{Body: 123})
-	if err != nil {
-		fmt.Println(err.Error())
+	productsFromDatabase := cs.Repository.Get(ctx)
+
+	var products []*model.Product
+	for _, product := range productsFromDatabase {
+		findStockByProduct, err := cs.StockServiceClient.FindStockByProduct(ctx, &stock.Message{Body: int32(product.ID)})
+		if err != nil {
+			log.WithError(err).Errorln("error when find findStockByProduct product")
+		}
+
+		productStock := int(findStockByProduct.Body)
+		product.Stock = &productStock
+		products = append(products, product)
 	}
 
-	return cs.Repository.Get(ctx)
+	return products
 }
 
 func (cs *ProductServiceImpl) ShowProduct(ctx context.Context, id *int) *model.Product {

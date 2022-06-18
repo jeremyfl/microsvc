@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/99designs/gqlgen v0.17.10
 	github.com/ravilushqa/otelgqlgen v0.7.0
+	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.7.2
 	github.com/vektah/gqlparser/v2 v2.4.5
 	gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615175719-0f989f080ef1
@@ -36,7 +37,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/segmentio/kafka-go v0.4.32 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/stretchr/objx v0.1.0 // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect

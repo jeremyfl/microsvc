@@ -133,14 +133,6 @@ github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673/go.mod h1:N3UwUGtsr
 github.com/yuin/goldmark v1.4.1/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615175719-0f989f080ef1 h1:Two0wYKE7L94QvFOFi6GNjG2j68QpBFV5ixNvXIa1HI=
 gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615175719-0f989f080ef1/go.mod h1:r2O81SmuGj4VfIBCWFTh0cr9a1r1EMEucXS+N15H5jA=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615174614-85a4ed97e4f5 h1:BNq5NBCd/vuVzmEzfc46nO9UVuLlxgOX0X8YfgLHLn8=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615174614-85a4ed97e4f5/go.mod h1:JQmo2XKRj90+YQ0nJIMEXcqJc06BmJt5INaWhc4r7uM=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615175719-0f989f080ef1 h1:VlAr/RV8hHhULEFI7/tVr/Zm3zGJrql/6gwqSnF32RM=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615175719-0f989f080ef1/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00 h1:rgJellPXFQHtX56QJUbPDT1Ywt77iCwDFXVRTgFuJ94=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d h1:+cSVqAOkr25jqUaVxcJL4NN2xpc4qG5Sz+X4Mpds408=
-gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618174411-dd922d1cc31f h1:hZ4yDxvAW8VtERWzpj3Bm7NPk0qGvIgycb6sSwE3UDY=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618174411-dd922d1cc31f/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 go.opentelemetry.io/contrib v1.7.0 h1:7jCRAqrnHPV9k9Km1RUTXvKJnvGL8UL3GklcCY0lAnk=
@@ -201,8 +193,6 @@ golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20210927094055-39ccf1dd6fa6/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20211019181941-9d821ace8654/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
-golang.org/x/sys v0.0.0-20220614162138-6c1b26c55098 h1:PgOr27OhUx2IRqGJ2RxAWI4dJQ7bi9cSrB82uzFzfUA=
-golang.org/x/sys v0.0.0-20220614162138-6c1b26c55098/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c h1:aFV+BgZ4svzjfabn8ERpuB4JI4N6/rdy1iusx77G3oU=
 golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=

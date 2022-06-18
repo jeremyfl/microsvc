@@ -1,6 +1,8 @@
 CREATE DATABASE IF NOT EXISTS productsvc;
 USE productsvc;
 
+
+
 CREATE DATABASE IF NOT EXISTS stocksvc;
 USE stocksvc;
 

@@ -7,7 +7,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"gitlab.com/jeremylo/microsvc/productsvc/graph/model"
 	"strconv"
 	"sync"
 
@@ -15,6 +14,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/introspection"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
+	"gitlab.com/jeremylo/microsvc/productsvc/graph/model"
 )
 
 // region    ************************** generated!.gotpl **************************
@@ -50,6 +50,7 @@ type ComplexityRoot struct {
 		Name        func(childComplexity int) int
 		Price       func(childComplexity int) int
 		Rating      func(childComplexity int) int
+		Stock       func(childComplexity int) int
 		Thumbnail   func(childComplexity int) int
 	}
 
@@ -127,6 +128,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Product.Rating(childComplexity), true
+
+	case "Product.stock":
+		if e.complexity.Product.Stock == nil {
+			break
+		}
+
+		return e.complexity.Product.Stock(childComplexity), true
 
 	case "Product.thumbnail":
 		if e.complexity.Product.Thumbnail == nil {
@@ -219,6 +227,7 @@ type Product {
   category: String
   brand: String
   thumbnail: String
+  stock: Int
 }
 
 type Query {
@@ -628,6 +637,47 @@ func (ec *executionContext) fieldContext_Product_thumbnail(ctx context.Context, 
 	return fc, nil
 }
 
+func (ec *executionContext) _Product_stock(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Product_stock(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Stock, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Product_stock(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Product",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_products(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_products(ctx, field)
 	if err != nil {
@@ -653,7 +703,7 @@ func (ec *executionContext) _Query_products(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*model.Product)
 	fc.Result = res
-	return ec.marshalOProduct2ᚕᚖproductsvcᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
+	return ec.marshalOProduct2ᚕᚖgitlabᚗcomᚋjeremyloᚋmicrosvcᚋproductsvcᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_products(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -680,6 +730,8 @@ func (ec *executionContext) fieldContext_Query_products(ctx context.Context, fie
 				return ec.fieldContext_Product_brand(ctx, field)
 			case "thumbnail":
 				return ec.fieldContext_Product_thumbnail(ctx, field)
+			case "stock":
+				return ec.fieldContext_Product_stock(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
@@ -712,7 +764,7 @@ func (ec *executionContext) _Query_productById(ctx context.Context, field graphq
 	}
 	res := resTmp.(*model.Product)
 	fc.Result = res
-	return ec.marshalOProduct2ᚖproductsvcᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
+	return ec.marshalOProduct2ᚖgitlabᚗcomᚋjeremyloᚋmicrosvcᚋproductsvcᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_productById(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -739,6 +791,8 @@ func (ec *executionContext) fieldContext_Query_productById(ctx context.Context, 
 				return ec.fieldContext_Product_brand(ctx, field)
 			case "thumbnail":
 				return ec.fieldContext_Product_thumbnail(ctx, field)
+			case "stock":
+				return ec.fieldContext_Product_stock(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
@@ -2709,6 +2763,10 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 
 			out.Values[i] = ec._Product_thumbnail(ctx, field, obj)
 
+		case "stock":
+
+			out.Values[i] = ec._Product_stock(ctx, field, obj)
+
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -3461,7 +3519,7 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return res
 }
 
-func (ec *executionContext) marshalOProduct2ᚕᚖproductsvcᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v []*model.Product) graphql.Marshaler {
+func (ec *executionContext) marshalOProduct2ᚕᚖgitlabᚗcomᚋjeremyloᚋmicrosvcᚋproductsvcᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v []*model.Product) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -3488,7 +3546,7 @@ func (ec *executionContext) marshalOProduct2ᚕᚖproductsvcᚋgraphᚋmodelᚐP
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOProduct2ᚖproductsvcᚋgraphᚋmodelᚐProduct(ctx, sel, v[i])
+			ret[i] = ec.marshalOProduct2ᚖgitlabᚗcomᚋjeremyloᚋmicrosvcᚋproductsvcᚋgraphᚋmodelᚐProduct(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3502,7 +3560,7 @@ func (ec *executionContext) marshalOProduct2ᚕᚖproductsvcᚋgraphᚋmodelᚐP
 	return ret
 }
 
-func (ec *executionContext) marshalOProduct2ᚖproductsvcᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
+func (ec *executionContext) marshalOProduct2ᚖgitlabᚗcomᚋjeremyloᚋmicrosvcᚋproductsvcᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

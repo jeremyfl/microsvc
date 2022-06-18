@@ -21,7 +21,7 @@ const defaultPort = "8080"
 func loadGrpcConnection() *grpc.ClientConn {
 	var conn *grpc.ClientConn
 
-	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
+	conn, err := grpc.Dial("stocksvc:9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %s", err)
 	}

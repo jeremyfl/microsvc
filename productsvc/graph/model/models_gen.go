@@ -11,4 +11,5 @@ type Product struct {
 	Category    *string  `json:"category"`
 	Brand       *string  `json:"brand"`
 	Thumbnail   *string  `json:"thumbnail"`
+	Stock       *int     `json:"stock"`
 }

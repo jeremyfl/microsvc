@@ -107,6 +107,8 @@ services:
     build:
       context: "./stocksvc"
     entrypoint: "/app/app ."
+    ports:
+      - 9000:9000
     restart: always
     environment:
       - APP_NAME=stocksvc
