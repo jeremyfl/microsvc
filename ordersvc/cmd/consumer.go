@@ -4,41 +4,17 @@ import (
 	"context"
 	log "github.com/sirupsen/logrus"
 	"gitlab.com/jeremylo/microsvc/lib"
-	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
 	"gitlab.com/jeremylo/microsvc/ordersvc/handler/event"
 	"sync"
 )
 
-type consumerTopic struct {
-	topic    string
-	handler  func(message []byte) error
-	dlqTopic string
-}
-
-func consumersRoute(entities domain.Services) []consumerTopic {
-	stockHandler := &event.Handler{Services: entities}
-
-	return []consumerTopic{
-		{
-			"stock.exceeded-amount",
-			stockHandler.StockExceededConsumer,
-			"stock.exceeded-amount.dlq",
-		},
-		{
-			"product.deleted",
-			stockHandler.GenericHandler,
-			"product.deleted.dlq",
-		},
-	}
-}
-
-func consume(consumers []consumerTopic) {
+func consume(consumers []event.ListRoute) {
 	var wg sync.WaitGroup
 	for _, consumer := range consumers {
 		wg.Add(1)
-		go func(consumer consumerTopic, wg *sync.WaitGroup) {
+		go func(consumer event.ListRoute, wg *sync.WaitGroup) {
 			defer wg.Done()
-			r := lib.InitMessageReader(consumer.topic, "ordersvc-consumer")
+			r := lib.InitMessageReader(consumer.Topic, Config["APP_NAME"])
 
 			for {
 				ctx := context.Background()
@@ -50,7 +26,7 @@ func consume(consumers []consumerTopic) {
 					break
 				}
 
-				if err = consumer.handler(message.Value); err != nil {
+				if err = consumer.Handler(message.Value); err != nil {
 					log.WithError(err).Errorln("error when handling the message from handler")
 
 					break
@@ -71,7 +47,7 @@ func consume(consumers []consumerTopic) {
 func Listen() {
 	ctx := context.Background()
 
-	tp := lib.InitTracer("ordersvc-consumer")
+	tp := lib.InitTracer(Config["APP_NAME"])
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)
@@ -82,7 +58,7 @@ func Listen() {
 	mb := initMessageBroker(w, nil)
 	db := initDatabase()
 	entities := InitEntities(db, mb)
-	route := consumersRoute(entities)
+	route := event.Route(entities)
 
 	consume(route)
 }
