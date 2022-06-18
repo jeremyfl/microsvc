@@ -25,5 +25,33 @@ services:
     networks:
       - microsvc
 
+  productsvc:
+    build:
+      context: "./productsvc"
+    ports:
+      - "8080:8080"
+    networks:
+      - microsvc
+
+  ordersvc:
+    build:
+      context: "./ordersvc"
+    ports:
+      - "3000:3000"
+    entrypoint: "/app/app serve"
+    environment:
+      - DB_HOST=mysql
+    networks:
+      - microsvc
+
+  ordersvc-listener:
+    build:
+      context: "./ordersvc"
+    entrypoint: "/app/app listen"
+    environment:
+      - DB_HOST=mysql
+    networks:
+      - microsvc
+
 networks:
   microsvc:
