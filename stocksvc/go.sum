@@ -140,6 +140,8 @@ gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d h1:+cSVqAOkr
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618112514-e5af9b0f91e3 h1:4FRPEyVOY6iH+awn776YlD+gdGLs5rtAKYts0bQv/yk=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618112514-e5af9b0f91e3/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
+gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618174411-dd922d1cc31f h1:hZ4yDxvAW8VtERWzpj3Bm7NPk0qGvIgycb6sSwE3UDY=
+gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618174411-dd922d1cc31f/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 go.opentelemetry.io/otel v1.7.0 h1:Z2lA3Tdch0iDcrhJXDIlC94XE+bxok1F9B+4Lz/lGsM=
 go.opentelemetry.io/otel v1.7.0/go.mod h1:5BdUoMIz5WEs0vt0CUEMtSSaTSHBBVwrhnz7+nrD5xk=
 go.opentelemetry.io/otel/exporters/jaeger v1.7.0 h1:wXgjiRldljksZkZrldGVe6XrG9u3kYDyQmkZwmm5dI0=

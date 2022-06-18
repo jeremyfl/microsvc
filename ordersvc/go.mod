@@ -8,7 +8,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.34.1
 	github.com/segmentio/kafka-go v0.4.32
 	github.com/stretchr/testify v1.7.2
-	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618112514-e5af9b0f91e3
+	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618174411-dd922d1cc31f
 	go.opentelemetry.io/otel v1.7.0
 	golang.org/x/net v0.0.0-20220615171555-694bf12d69de
 	gorm.io/driver/mysql v1.3.4

@@ -7,7 +7,7 @@ require (
 	github.com/segmentio/kafka-go v0.4.32
 	github.com/stretchr/testify v1.7.2
 	gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615100423-0fba4a4e08b2
-	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618112514-e5af9b0f91e3
+	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618174411-dd922d1cc31f
 	golang.org/x/net v0.0.0-20220614195744-fb05da6f9022
 	google.golang.org/grpc v1.47.0
 	gorm.io/driver/mysql v1.3.4

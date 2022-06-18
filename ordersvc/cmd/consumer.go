@@ -14,7 +14,7 @@ func consume(consumers []event.ListRoute) {
 		wg.Add(1)
 		go func(consumer event.ListRoute, wg *sync.WaitGroup) {
 			defer wg.Done()
-			r := lib.InitMessageReader(consumer.Topic, Config["APP_NAME"])
+			r := lib.InitMessageReader(consumer.Topic, lib.Config["APP_NAME"])
 
 			for {
 				ctx := context.Background()
@@ -47,7 +47,7 @@ func consume(consumers []event.ListRoute) {
 func Listen() {
 	ctx := context.Background()
 
-	tp := lib.InitTracer(Config["APP_NAME"])
+	tp := lib.InitTracer(lib.Config["APP_NAME"])
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)

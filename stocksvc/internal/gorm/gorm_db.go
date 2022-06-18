@@ -2,14 +2,13 @@ package gorm
 
 import (
 	"fmt"
+	"gitlab.com/jeremylo/microsvc/lib"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
 func NewClient() (*gorm.DB, error) {
-	host := os.Getenv("DB_HOST")
-
+	host := lib.Config["DB_HOST"]
 	if host == "" {
 		host = "127.0.0.1"
 	}
