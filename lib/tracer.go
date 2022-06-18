@@ -6,13 +6,19 @@ import (
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"log"
+	"os"
 
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
 
 func InitTracer(serviceName string) *sdktrace.TracerProvider {
-	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint("http://127.0.0.1:14268/api/traces")))
+	host := os.Getenv("JAEGER_HOST")
+	if host == "" {
+		host = "http://127.0.0.1:14268/api/traces"
+	}
+
+	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(host)))
 	if err != nil {
 		log.Fatal(err)
 	}

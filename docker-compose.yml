@@ -25,6 +25,26 @@ services:
     networks:
       - microsvc
 
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - microsvc
+
+  kafka:
+    build: "./kafka"
+    ports:
+      - "9092:9092"
+    networks:
+      - microsvc
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   productsvc:
     build:
       context: "./productsvc"
@@ -41,6 +61,8 @@ services:
     entrypoint: "/app/app serve"
     environment:
       - DB_HOST=mysql
+      - JAEGER_HOST="http://jaeger:14268/api/traces"
+      - KAFKA_HOST="kafka:9092"
     networks:
       - microsvc
 
@@ -50,6 +72,8 @@ services:
     entrypoint: "/app/app listen"
     environment:
       - DB_HOST=mysql
+      - JAEGER_HOST="http://jaeger:14268/api/traces"
+      - KAFKA_HOST="kafka:9092"
     networks:
       - microsvc
 
