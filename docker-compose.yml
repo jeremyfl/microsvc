@@ -12,18 +12,6 @@ services:
     networks:
       - microsvc
 
-  redis:
-    ports:
-      - '6379:6379'
-    image: redis
-
-  zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-    networks:
-      - microsvc
-
   kafka:
     build:
       context: "./kafka"
@@ -32,11 +20,26 @@ services:
     networks:
       - microsvc
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "order.created:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - microsvc
+
+  redis:
+    ports:
+      - '6379:6379'
+    image: redis
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -76,8 +79,8 @@ services:
       - KAFKA_HOST=kafka
     depends_on:
       - mysql
+      - kafka
       - jaeger
-      - redis
     networks:
       - microsvc
 
@@ -85,17 +88,35 @@ services:
     build:
       context: "./ordersvc"
     entrypoint: "/app/app listen"
-    restart: always
+    restart: on-failure
     environment:
       - DB_HOST=mysql
       - JAEGER_HOST=http://jaeger:14268/api/traces
       - KAFKA_HOST=kafka
     depends_on:
       - mysql
+      - kafka
       - jaeger
-      - redis
+    networks:
+      - microsvc
+
+  stocksvc-listener:
+    build:
+      context: "./stocksvc"
+    entrypoint: "/app/app listen"
+    restart: on-failure
+    environment:
+      - DB_HOST=mysql
+      - JAEGER_HOST=http://jaeger:14268/api/traces
+      - KAFKA_HOST=kafka
+    depends_on:
+      - mysql
+      - kafka
+      - jaeger
+      - ordersvc-listener
     networks:
       - microsvc
 
 networks:
   microsvc:
+    external: true
