@@ -72,7 +72,7 @@ services:
     environment:
       - DB_HOST=mysql
       - JAEGER_HOST=http://jaeger:14268/api/traces
-      - KAFKA_HOST="kafka:9092"
+      - KAFKA_HOST=PLAINTEXT://kafka
     depends_on:
       - mysql
       - jaeger
@@ -88,7 +88,7 @@ services:
     environment:
       - DB_HOST=mysql
       - JAEGER_HOST=http://jaeger:14268/api/traces
-      - KAFKA_HOST="kafka:9092"
+      - KAFKA_HOST=PLAINTEXT://kafka
     depends_on:
       - mysql
       - jaeger

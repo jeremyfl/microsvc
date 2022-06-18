@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"fmt"
 	"github.com/segmentio/kafka-go"
 	"os"
 	"time"
@@ -12,8 +13,10 @@ func init() {
 	kafkaHost = os.Getenv("KAFKA_HOST")
 
 	if kafkaHost == "" {
-		kafkaHost = "localhost:9092"
+		kafkaHost = "localhost"
 	}
+
+	kafkaHost = fmt.Sprintf("%s:9092", kafkaHost)
 }
 
 func InitMessageReader(topic, groupId string) *kafka.Reader {

@@ -139,6 +139,8 @@ gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615175719-0f989f080ef1 h1:VlAr/RV8h
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615175719-0f989f080ef1/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00 h1:rgJellPXFQHtX56QJUbPDT1Ywt77iCwDFXVRTgFuJ94=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
+gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d h1:+cSVqAOkr25jqUaVxcJL4NN2xpc4qG5Sz+X4Mpds408=
+gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 go.opentelemetry.io/contrib v1.7.0 h1:7jCRAqrnHPV9k9Km1RUTXvKJnvGL8UL3GklcCY0lAnk=
 go.opentelemetry.io/contrib v1.7.0/go.mod h1:FlyPNX9s4U6MCsWEc5YAK4KzKNHFDsjrDUZijJiXvy8=
 go.opentelemetry.io/otel v1.7.0 h1:Z2lA3Tdch0iDcrhJXDIlC94XE+bxok1F9B+4Lz/lGsM=
