@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"context"
+	log "github.com/sirupsen/logrus"
 	"gitlab.com/jeremylo/microsvc/lib"
 	"gitlab.com/jeremylo/microsvc/ordersvc/domain"
 	"gitlab.com/jeremylo/microsvc/ordersvc/handler/event"
-	"log"
 	"sync"
 )
 
@@ -45,24 +45,20 @@ func consume(consumers []consumerTopic) {
 
 				message, err := r.ReadMessage(ctx)
 				if err != nil {
-					log.Println(err.Error())
+					log.WithError(err).Errorln("error when reading messages")
 
 					break
 				}
 
 				if err = consumer.handler(message.Value); err != nil {
-					log.Println(err.Error())
+					log.WithError(err).Errorln("error when handling the message from handler")
 
 					break
-				}
-
-				if err = r.CommitMessages(ctx, message); err != nil {
-					log.Println("error when committing", err.Error())
 				}
 			}
 
 			if err := r.Close(); err != nil {
-				log.Fatal("failed to close reader:", err)
+				log.WithError(err).Errorln("failed to close reader")
 			}
 
 			wg.Done()

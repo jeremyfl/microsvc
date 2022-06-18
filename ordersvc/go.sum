@@ -106,6 +106,8 @@ gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00 h1:rgJellPXF
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d h1:+cSVqAOkr25jqUaVxcJL4NN2xpc4qG5Sz+X4Mpds408=
 gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618100209-582ac1bac12d/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
+gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618112514-e5af9b0f91e3 h1:4FRPEyVOY6iH+awn776YlD+gdGLs5rtAKYts0bQv/yk=
+gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618112514-e5af9b0f91e3/go.mod h1:u22g267p9tyX8VEhRwYxCBfoOo/SQSHC2mFa1jXi/fw=
 go.opentelemetry.io/contrib v1.7.0 h1:7jCRAqrnHPV9k9Km1RUTXvKJnvGL8UL3GklcCY0lAnk=
 go.opentelemetry.io/contrib v1.7.0/go.mod h1:FlyPNX9s4U6MCsWEc5YAK4KzKNHFDsjrDUZijJiXvy8=
 go.opentelemetry.io/contrib/propagators/b3 v1.7.0 h1:oRAenUhj+GFttfIp3gj7HYVzBhPOHgq/dWPDSmLCXSY=

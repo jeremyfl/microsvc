@@ -17,14 +17,6 @@ services:
       - '6379:6379'
     image: redis
 
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - "14268:14268"
-      - "16686:16686"
-    networks:
-      - microsvc
-
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
@@ -33,7 +25,8 @@ services:
       - microsvc
 
   kafka:
-    build: "./kafka"
+    build:
+      context: "./kafka"
     ports:
       - "9092:9092"
     networks:
@@ -44,6 +37,14 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "14268:14268"
+      - "16686:16686"
+    networks:
+      - microsvc
 
   productsvc:
     build:
@@ -72,7 +73,7 @@ services:
     environment:
       - DB_HOST=mysql
       - JAEGER_HOST=http://jaeger:14268/api/traces
-      - KAFKA_HOST=PLAINTEXT://kafka
+      - KAFKA_HOST=kafka
     depends_on:
       - mysql
       - jaeger
@@ -84,16 +85,15 @@ services:
     build:
       context: "./ordersvc"
     entrypoint: "/app/app listen"
-    restart: on-failure
+    restart: always
     environment:
       - DB_HOST=mysql
       - JAEGER_HOST=http://jaeger:14268/api/traces
-      - KAFKA_HOST=PLAINTEXT://kafka
+      - KAFKA_HOST=kafka
     depends_on:
       - mysql
       - jaeger
       - redis
-      - kafka
     networks:
       - microsvc
 

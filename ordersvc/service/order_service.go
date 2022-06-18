@@ -20,10 +20,12 @@ func (cs *OrderServiceImpl) CreateOrder(ctx context.Context, payload *model.Orde
 
 	p, err := cs.Repository.Create(ctx, payload)
 	if err != nil {
+		log.WithError(err).Errorln("error when creating to db")
 		return err
 	}
 
 	if err := cs.MessageBroker.Publish(ctx, "order.created", p); err != nil {
+		log.WithError(err).Errorln("error when publishing order created")
 		return err
 	}
 
@@ -42,6 +44,8 @@ func (cs *OrderServiceImpl) CancelOrder(ctx context.Context, payload *model.Orde
 		},
 	}
 	if err := cs.Repository.Update(ctx, &p, &model.Order{ProductID: payload.ProductID, IsCanceled: true}); err != nil {
+		log.WithError(err).Errorln("error when update collection to db")
+
 		return err
 	}
 
