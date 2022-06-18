@@ -6,14 +6,19 @@ import (
 	"time"
 )
 
-func InitMessageReader(topic, groupId string) *kafka.Reader {
-	host := os.Getenv("KAFKA_HOST")
-	if host == "" {
-		host = "localhost:9092"
-	}
+var kafkaHost string
 
+func init() {
+	kafkaHost = os.Getenv("KAFKA_HOST")
+
+	if kafkaHost == "" {
+		kafkaHost = "localhost:9092"
+	}
+}
+
+func InitMessageReader(topic, groupId string) *kafka.Reader {
 	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{host},
+		Brokers:   []string{kafkaHost},
 		Topic:     topic,
 		Partition: 0,
 		GroupID:   groupId,
@@ -24,7 +29,7 @@ func InitMessageReader(topic, groupId string) *kafka.Reader {
 
 func InitMessageWriter() *kafka.Writer {
 	return &kafka.Writer{
-		Addr:         kafka.TCP("localhost:9092"),
+		Addr:         kafka.TCP(kafkaHost),
 		Balancer:     &kafka.LeastBytes{},
 		BatchTimeout: 10 * time.Millisecond,
 	}

@@ -8,7 +8,7 @@ require (
 	github.com/stretchr/testify v1.7.2
 	github.com/vektah/gqlparser/v2 v2.4.5
 	gitlab.com/jeremylo/microsvc/grpc v0.0.0-20220615175719-0f989f080ef1
-	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220615175719-0f989f080ef1
+	gitlab.com/jeremylo/microsvc/lib v0.0.0-20220618090651-01b8a3208f00
 	go.opentelemetry.io/otel v1.7.0
 	go.opentelemetry.io/otel/trace v1.7.0
 	golang.org/x/net v0.0.0-20220615171555-694bf12d69de

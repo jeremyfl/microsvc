@@ -13,12 +13,12 @@ import (
 )
 
 func InitTracer(serviceName string) *sdktrace.TracerProvider {
-	host := os.Getenv("JAEGER_HOST")
-	if host == "" {
-		host = "http://127.0.0.1:14268/api/traces"
+	tracerHost := os.Getenv("JAEGER_HOST")
+	if tracerHost == "" {
+		tracerHost = "http://127.0.0.1:14268/api/traces"
 	}
 
-	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(host)))
+	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(tracerHost)))
 	if err != nil {
 		log.Fatal(err)
 	}
