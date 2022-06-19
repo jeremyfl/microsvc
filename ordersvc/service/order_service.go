@@ -39,7 +39,7 @@ func (cs *OrderServiceImpl) CancelOrder(ctx context.Context, payload *model.Orde
 	defer span.End()
 
 	p := model.Order{
-		Model:         gorm.Model{
+		Model: gorm.Model{
 			ID: payload.ID,
 		},
 	}

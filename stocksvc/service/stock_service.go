@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/jeremylo/microsvc/grpc/model/stock"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
 	"gitlab.com/jeremylo/microsvc/stocksvc/domain/model"
 	"time"
@@ -11,7 +10,6 @@ import (
 
 type StockServiceImpl struct {
 	Repository         domain.StockRepository
-	StockServiceClient stock.StockServiceClient
 	MessageBroker      domain.MessageBroker
 }
 
