@@ -3,37 +3,18 @@ package cmd
 import (
 	"context"
 	"gitlab.com/jeremylo/microsvc/lib"
-	"gitlab.com/jeremylo/microsvc/stocksvc/domain"
 	"gitlab.com/jeremylo/microsvc/stocksvc/handler/event"
 	"log"
 	"sync"
 )
 
-type consumerTopic struct {
-	topic    string
-	handler  func(message []byte) error
-	dlqTopic string
-}
-
-func consumersRoute(entities domain.Services) []consumerTopic {
-	stockHandler := &event.Handler{Services: entities}
-
-	return []consumerTopic{
-		{
-			"order.created",
-			stockHandler.OrderCreated,
-			"order.created.dlq",
-		},
-	}
-}
-
-func consume(consumers []consumerTopic) {
+func consume(consumers []event.ListRoute) {
 	var wg sync.WaitGroup
 	for _, consumer := range consumers {
 		wg.Add(1)
-		go func(consumer consumerTopic, wg *sync.WaitGroup) {
+		go func(consumer event.ListRoute, wg *sync.WaitGroup) {
 			defer wg.Done()
-			r := lib.InitMessageReader(consumer.topic, "ordersvc-consumer")
+			r := lib.InitMessageReader(consumer.Topic, lib.Config["APP_NAME"])
 
 			for {
 				ctx := context.Background()
@@ -45,7 +26,7 @@ func consume(consumers []consumerTopic) {
 					break
 				}
 
-				if err = consumer.handler(message.Value); err != nil {
+				if err = consumer.Handler(message.Value); err != nil {
 					log.Println(err.Error())
 
 					break
@@ -70,7 +51,7 @@ func consume(consumers []consumerTopic) {
 func Listen() {
 	ctx := context.Background()
 
-	tp := lib.InitTracer("stocksvc-consumer")
+	tp := lib.InitTracer(lib.Config["APP_NAME"])
 	defer func() {
 		if err := tp.Shutdown(ctx); err != nil {
 			log.Printf("Error shutting down tracer provider: %v", err)
@@ -81,7 +62,7 @@ func Listen() {
 	mb := initMessageBroker(w, nil)
 	db := initDatabase()
 	entities := InitEntities(db, mb)
-	route := consumersRoute(entities)
+	route := event.Route(entities)
 
 	consume(route)
 }
