@@ -43,6 +43,8 @@ INSERT INTO products(id,name,price,description,rating,category,brand,thumbnail) 
 INSERT INTO products(id,name,price,description,rating,category,brand,thumbnail) VALUES (29,'Handcraft Chinese style',60,'Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate',4.44,'home-decoration','luxury palace','https://dummyjson.com/image/i/products/29/thumbnail.webp');
 INSERT INTO products(id,name,price,description,rating,category,brand,thumbnail) VALUES (30,'Key Holder',30,'Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality',4.92,'home-decoration','Golden','https://dummyjson.com/image/i/products/30/thumbnail.jpg');
 
+ALTER TABLE `productsvc`.`products` ADD COLUMN `deleted_at` datetime NULL;
+
 CREATE DATABASE IF NOT EXISTS stocksvc;
 USE stocksvc;
 
