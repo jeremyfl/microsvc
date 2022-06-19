@@ -17,9 +17,14 @@
 
 Sometimes when we start the DB and Kafka, we get an error and are stuck in infinite restart like `[error] failed to initialize database, got error dial tcp 192.168.176.5:3306: connect: connection refused` that’s because the MySQL or Kafka not starting yet. Since we always retry by `always: restart` inside docker-compose, the container will restart until the MySQL and Kafka completely start.
 
-## Distributed Tracing
+### Distributed Tracing
 
 We are using Open Tracing and Jaeger to trace that can be accesed through: [http://localhost:16686/](http://localhost:16686/)
+
+### Distributed Transactions
+
+We utilize event or service choreography to handle the transactions, it will rollback all the changes if any of the service fails. In our case when the stock is exceeded, then the order service will cancel the order.
+
 
 ## Product Services API (GraphQL)
 
