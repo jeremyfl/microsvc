@@ -29,7 +29,7 @@ func (cs *StockServiceImpl) DecreaseStock(ctx context.Context, payload *model.Or
 	log.WithField("current_stock_total", currentStock.Total).Infoln("decreasing ..")
 
 	if currentStock.Total < payload.TotalQuantity {
-		if err := cs.MessageBroker.Publish(context.Background(), "stock.exceeded-amount", &payload); err != nil {
+		if err := cs.MessageBroker.Publish(ctx, "stock.exceeded-amount", &payload); err != nil {
 			return err
 		}
 
